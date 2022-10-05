@@ -1,0 +1,8 @@
+<h1>{{ blog.title }} </h1>
+<h3> By: <small>{{ blog.author.first_name}} {{ blog.author.last_name}}</small></h3>
+<hr/>
+<p> {{ blog.body}} </p>
+
+<a href="{% url 'home' %}"> Back</a>
+
+
