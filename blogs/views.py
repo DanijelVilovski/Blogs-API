@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import Blog 
-from .forms import BlogForm
+from .forms import AddBlogForm, EditBlogForm
 
 # listview allows us to  list a query set into the database (all blog posts)
 # detailview is similar but it brings back details of just one record (one blog post)
@@ -14,6 +15,7 @@ from .forms import BlogForm
 class HomeView(ListView):
     model = Blog
     template_name = 'home.html'
+    ordering = ['-id'] #we want the last added or updated blog, to be positioned on top of the list of blogs 
 
 class BlogsDetailView(DetailView):
     model = Blog
@@ -21,7 +23,17 @@ class BlogsDetailView(DetailView):
 
 class AddBlogView(CreateView):
     model = Blog
-    form_class = BlogForm
+    form_class = AddBlogForm
     template_name = 'addblog.html'
     #fields = '__all__'
 
+class EditBlogView(UpdateView):
+    model = Blog
+    form_class = EditBlogForm
+    template_name = 'updateblog.html'
+    #fields = ['title', 'body']
+
+class DeleteBlogView(DeleteView):
+    model = Blog
+    success_url = 'http://localhost:8000'
+    template_name = "deleteblog.html"
