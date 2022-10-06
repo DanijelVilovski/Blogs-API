@@ -8,7 +8,8 @@
 <hr/>
 <p> {{ blog.body}} </p>
 
-<a class="btn btn-dark" href="{% url 'homeview' %}"> Back</a>
+<a class="btn btn-dark" href="{% url 'updateblogview' blog.pk %}" style="font-weight: 600"> Edit</a>
+<a class="btn btn-danger" href="{% url 'homeview' %}" style="font-weight: 600"> Back</a>
 
 {% endblock %}
 

@@ -2,15 +2,30 @@
 
 {% block content %}
 
-<h1>Blogs</h1>
+<div style="display: flex;
+            justify-content: space-between;
+            align-items: center;">
+    <h1 style="margin: 5px 0 40px 0;">Blogs</h1>
+    <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
+</div>
 <ul>
 {% for blog in object_list %}
-    <li><a href="{% url 'blogdetailview' blog.pk %}">{{ blog.title }}</a> - {{ blog.author.first_name }} {{ blog.author.last_name }} <br/>
-    {{ blog.body }}
+    <li>
+        <a href="{% url 'blogdetailview' blog.pk %}" 
+        style="
+        text-decoration: none; 
+        font-weight: 700; 
+        color: #292b2c;
+        font-size: 20px;
+        ">
+        {{ blog.title }}</a> - {{ blog.author.first_name }} {{ blog.author.last_name }} <br/>
+        <p style="color: rgb(124, 122, 122);"> {{ blog.body }} </p>
     </li>
     <hr>
 {% endfor %}
 </ul>
-<a href="{% url 'addblogview' %}" class="btn btn-dark">Add blog</a>
+
 
 {% endblock %}
+
+    

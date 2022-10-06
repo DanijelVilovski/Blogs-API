@@ -9,36 +9,11 @@
         <form action="" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-dark">Add</button>
+            <button type="submit" class="btn btn-dark" style="font-weight: 600">Add</button>
+            <a href="{% url 'homeview' %}" type="submit" class="btn btn-danger" style="font-weight: 600">Cancel</a>
+        </form>
     </div>
-        <!-- <div class="form-group">
-            <label for={}>Title <span class="require">*</span></label>
-            <input type="text" class="form-control" name="slug" />
-        </div>
-        
-        <div class="form-group">
-            <label for="author">Author <span class="require">*</span></label>
-            <input type="text" class="form-control" name="title" />
-        </div>
-        
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea rows="5" class="form-control" name="description" ></textarea>
-        </div>
-        
-        <div class="form-group">
-            <p><span class="require">*</span> - required fields</p>
-        </div>
-        
-        <div class="form-group">
-            <button type="submit" class="btn btn-dark">
-                Create
-            </button>
-            <button  class="btn btn-light">
-                Cancel
-            </button>
-        </div> -->
-    </form>
+
 
 
 
