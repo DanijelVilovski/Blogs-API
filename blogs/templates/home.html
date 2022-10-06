@@ -10,20 +10,29 @@
 </div>
 <hr>
 <ul>
-{% for blog in object_list %}
-    <li>
-        <a href="{% url 'blogdetailview' blog.pk %}"
-        style="
-        text-decoration: none; 
-        font-weight: 700; 
-        color: #292b2c;
-        font-size: 20px;
-        ">
-        {{ blog.title }}</a> - {{ blog.author.first_name }} {{ blog.author.last_name }} <br/>
-        <p style="color: rgb(124, 122, 122);"> {{ blog.body }} </p>
-    </li>
-    <hr>
-{% endfor %}
+    {% for blog in object_list %}
+        <li>
+            <a href="{% url 'blogdetailview' blog.pk %}"
+            style="
+            text-decoration: none; 
+            font-weight: 700; 
+            color: #292b2c;
+            font-size: 20px;
+            ">
+                {{ blog.title }}
+            </a> - {{ blog.author.first_name }} {{ blog.author.last_name }} 
+            <br/>
+            <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
+                {{ blog.body }}
+            </p>
+            <div style="display: flex; justify-content: flex-end;">
+                <p style="font-weight: 500;">
+                    {{ blog.date_created }}
+                </p>
+            </div>
+        </li>
+        <hr>
+    {% endfor %}
 </ul>
 
 
