@@ -8,10 +8,11 @@
     <h1 style="margin: 5px 0 40px 0;">Blogs</h1>
     <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
 </div>
+<hr>
 <ul>
 {% for blog in object_list %}
     <li>
-        <a href="{% url 'blogdetailview' blog.pk %}" 
+        <a href="{% url 'blogdetailview' blog.pk %}"
         style="
         text-decoration: none; 
         font-weight: 700; 

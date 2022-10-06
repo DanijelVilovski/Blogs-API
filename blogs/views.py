@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import Blog 
 from .forms import AddBlogForm, EditBlogForm
 
@@ -14,6 +15,7 @@ from .forms import AddBlogForm, EditBlogForm
 class HomeView(ListView):
     model = Blog
     template_name = 'home.html'
+    ordering = ['-id'] #we want the last added or updated blog, to be positioned on top of the list of blogs 
 
 class BlogsDetailView(DetailView):
     model = Blog
@@ -30,3 +32,8 @@ class EditBlogView(UpdateView):
     form_class = EditBlogForm
     template_name = 'updateblog.html'
     #fields = ['title', 'body']
+
+class DeleteBlogView(DeleteView):
+    model = Blog
+    success_url = 'http://localhost:8000'
+    template_name = "deleteblog.html"
