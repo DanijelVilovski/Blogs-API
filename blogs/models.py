@@ -14,4 +14,4 @@ class Blog(models.Model):
         return self.title + " | " + str(self.author) # parsing to string because author is object
 
     def get_absolute_url(self):
-        return reverse('blogdetailview', args=(str(self.id))) #method where we define where to redirect after adding blog 
+        return reverse('blogdetailview', args=[str(self.id)]) #method where we define where to redirect after adding blog 

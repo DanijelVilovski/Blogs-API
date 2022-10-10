@@ -15,7 +15,8 @@ from .forms import AddBlogForm, EditBlogForm
 class HomeView(ListView):
     model = Blog
     template_name = 'home.html'
-    ordering = ['-id'] #we want the last added or updated blog, to be positioned on top of the list of blogs 
+    # ordering = ['-id'] #we want the last added or updated blog, to be positioned on top of the list of blogs 
+    ordering = ['-date_created']
 
 class BlogsDetailView(DetailView):
     model = Blog

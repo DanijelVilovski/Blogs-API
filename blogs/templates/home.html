@@ -5,8 +5,10 @@
 <div style="display: flex;
             justify-content: space-between;
             align-items: center;">
-    <h1 style="margin: 5px 0 40px 0;">Blogs</h1>
-    <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
+    <h1>Blogs</h1>
+    {% if user.is_authenticated %}
+        <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
+    {% endif %}
 </div>
 <hr>
 <ul>
@@ -23,7 +25,7 @@
             </a> - {{ blog.author.first_name }} {{ blog.author.last_name }} 
             <br/>
             <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
-                {{ blog.body }}
+                {{ blog.body|truncatewords:200 }}
             </p>
             <div style="display: flex; justify-content: flex-end;">
                 <p style="font-weight: 500;">
