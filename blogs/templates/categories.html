@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_superuser%}
+    <div style="display: flex;
+                justify-content: space-between;
+                align-items: center;">
+        <h1>Categories</h1>
+        {% if user.is_authenticated %}
+            <div>
+                {% if user.is_superuser %}
+                    <a href="{% url 'addcategoryview' %}" class="btn btn-dark" style="font-weight: 600;">Add category</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <ul>
+        {% for category in object_list %}
+            <a href="{% url 'editcategoryview' category.pk %}"
+            style="
+            text-decoration: none; 
+            font-weight: 600; 
+            color: #292b2c;
+            font-size: 20px;
+            ">
+                {{ category.id }} - {{ category.name }}
+            </a>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h1> 401 - Unauthorized :( </h1>
+{% endif %}
+
+
+{% endblock %}

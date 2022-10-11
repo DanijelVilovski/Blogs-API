@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -6,5 +6,11 @@ urlpatterns = [
     path('blogs/<int:pk>', views.BlogsDetailView.as_view(), name='blogdetailview'),
     path('addblog', views.AddBlogView.as_view(), name='addblogview'),
     path('blogs/updateblog/<int:pk>', views.EditBlogView.as_view(), name='updateblogview'),
-    path('blogs/<int:pk>/deleteblog', views.DeleteBlogView.as_view(), name='deleteblogview')
+    path('blogs/<int:pk>/deleteblog', views.DeleteBlogView.as_view(), name='deleteblogview'),
+
+    path('addcategory', views.AddCategoryView.as_view(), name='addcategoryview'),
+    path('categories', views.CategoryView.as_view(), name='categoriesviews'),
+    path('categories/editcategory/<int:pk>', views.EditCategoryView.as_view(), name='editcategoryview'),
+    path('categories/<int:pk>/deletecategory', views.DeleteCategoryView.as_view(), name='deletecategoryview'),
+    re_path('category/(?P<categoryname>[-\w]*)/$', views.CategoryBlogList, name='category'),
 ]
