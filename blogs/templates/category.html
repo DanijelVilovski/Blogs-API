@@ -5,16 +5,14 @@
 <div style="display: flex;
             justify-content: space-between;
             align-items: center;">
-    <h1>Blogs</h1>
-    {% if user.is_authenticated %}
-        <div>
-            <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
-        </div>
-    {% endif %}
+    <h1>{{ cats }} Blogs</h1>
+    <div>
+        <a href="{% url 'homeview' %}" class="btn btn-dark" style="font-weight: 600;">Back</a>
+    </div>
 </div>
 <hr>
 <ul>
-    {% for blog in object_list %}
+    {% for blog in category_blogs %}
         <li>
             <div style="display: flex;
             justify-content: space-between;
@@ -30,12 +28,7 @@
                         {{ blog.title }}
                     </a> - {{ blog.author.first_name }} {{ blog.author.last_name }} 
                 </div>
-                <a 
-                href="{% url 'category' blog.category.name %}"
-                style="text-decoration: none;"
-                > 
-                    {{ blog.category.name | title }} 
-                </a>
+                <p> {{ blog.category.name | title }} </p>
             </div>
             <br/>
             <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">

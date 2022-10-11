@@ -9,11 +9,12 @@
     <h5> Author: <small>{{ blog.author.first_name}} {{ blog.author.last_name}}</small> </h5>
     <p style="font-weight: 500;"> {{ blog.date_created }} </p>
     </div>
+    <h6> Category: <small>{{ blog.category.name }}</small> </h6>
     <hr/>
-    <p style="text-align: justify;"> {{ blog.body}} </p>
+    <p style="text-align: justify;"> {{ blog.body }} </p>
     <hr>
     <div style="display: flex; justify-content: space-between;">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and blog.author.id == user.id %}
         <div>
             <a class="btn btn-dark" href="{% url 'updateblogview' blog.pk %}" style="font-weight: 600"> Edit</a>
             <a class="btn btn-danger" href="{% url 'deleteblogview' blog.pk %}" style="font-weight: 600"> Delete</a>

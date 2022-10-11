@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Delete category {% endblock %}
+
+{% block content %}
+
+    {% if user.is_superuser %}
+        <h1>Delete category</h1>
+        <div class="from-group">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-danger" style="font-weight: 600">Delete</button>
+                <a href="{% url 'categoriesviews' %}" type="submit" class="btn btn-dark" style="font-weight: 600">Cancel</a>
+            </form>
+        </div>
+    {% else %}
+        <h1> 401 - Unauthorized :( </h1>
+        <h6> You are not authorized to add categories! </h6>
+    {% endif %}
+
+{% endblock %}
