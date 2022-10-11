@@ -39,7 +39,7 @@
             </div>
             <br/>
             <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
-                {{ blog.body|truncatewords:200 }}
+                {{ blog.body|truncatewords:200|safe }}
             </p>
             <div style="display: flex; justify-content: flex-end;">
                 <p style="font-weight: 500;">

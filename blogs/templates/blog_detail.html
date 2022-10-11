@@ -11,7 +11,7 @@
     </div>
     <h6> Category: <small>{{ blog.category.name }}</small> </h6>
     <hr/>
-    <p style="text-align: justify;"> {{ blog.body }} </p>
+    <p style="text-align: justify;"> {{ blog.body|safe }} </p>
     <hr>
     <div style="display: flex; justify-content: space-between;">
         {% if user.is_authenticated and blog.author.id == user.id %}

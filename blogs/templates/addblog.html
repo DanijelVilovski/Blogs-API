@@ -9,6 +9,7 @@
         <div class="from-group">
             <form action="" method="POST">
                 {% csrf_token %}
+                {{ form.media }}  
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-dark" style="font-weight: 600">Add</button>
                 <a href="{% url 'homeview' %}" type="submit" class="btn btn-danger" style="font-weight: 600">Cancel</a>
