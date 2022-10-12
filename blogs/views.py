@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Blog, Category 
+from django.contrib.auth.models import User
 from .forms import AddBlogForm, EditBlogForm, AddCategoryForm, EditCategoryForm
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 
 # listview allows us to  list a query set into the database (all blog posts)
@@ -65,10 +66,32 @@ class DeleteCategoryView(DeleteView):
     success_url = 'http://localhost:8000/categories'
     template_name = "deletecategory.html"
 
+class AuthorView(ListView):
+    model = Blog
+    template_name = "author.html"
+
+class ProfileView(DetailView):
+    model = User
+    template_name = 'profile.html'
+
 #functions based views
 
 def CategoryBlogList(request, categoryname):
     category = Category.objects.get(name=categoryname) 
     category_blogs = Blog.objects.filter(category=category)
     return render(request, 'category.html', {'cats': categoryname, 'category_blogs': category_blogs})
+
+def LikeBlogView(request, pk):
+    blog = get_object_or_404(Blog, id=request.POST.get('blog_id'))
+    liked = False
+
+    if blog.likes.filter(id=request.user.id).exists():
+        blog.likes.remove(request.user)
+        liked = False
+    else: 
+        blog.likes.add(request.user)
+        liked = True
+    return HttpResponseRedirect(reverse('blogdetailview', args=[str(pk)]))
+
+    
 

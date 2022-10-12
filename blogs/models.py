@@ -17,10 +17,11 @@ class Blog(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
-    #body = models.TextField()
+    snippet = models.CharField(max_length=500, default='Click on the blog to see more details!')
     date_created = models.DateField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
- 
+    likes = models.ManyToManyField(User, related_name='blog_post')
+
     def __str__(self):
         return self.title + " | " + str(self.author) # parsing to string because author is object
 

@@ -34,7 +34,8 @@
             <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
                 {{ blog.body|truncatewords:200 }}
             </p>
-            <div style="display: flex; justify-content: flex-end;">
+            <div style="display: flex; justify-content: space-between;">
+                <p>{{ blog.likes.count }} likes</p>
                 <p style="font-weight: 500;">
                     {{ blog.date_created }}
                 </p>

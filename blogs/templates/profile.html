@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %} User profile {% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <h1 style="text-align: center;">User profile</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 50px 0;">
+            <img src="https://icon-library.com/images/profile-png-icon/profile-png-icon-2.jpg" height="128px" width="128">
+            <div>
+                <h5>Name: {{user.first_name}} {{user.last_name}} </h2>
+                <h5>Email: {{user.email}} </h2>
+            </div>
+        </div>
+        <div style="display: flex;
+            justify-content: space-between;
+            align-items: center;"
+        >
+            <h1>Blogs</h1>
+            <!-- {% if user.is_authenticated %}
+                <div>
+                    <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
+                </div>
+            {% endif %} -->
+        </div>
+        <hr>
+        <ul>
+            {% for blog in blogs_user %}
+                {% if blog.author.id == user.id %}
+                    <li>
+                        <div style="display: flex;
+                        justify-content: space-between;
+                        align-items: center;"> 
+                            <div style="display: flex; justify-content: space-between;">
+                                <a href="{% url 'blogdetailview' blog.pk %}"
+                                style="
+                                text-decoration: none; 
+                                font-weight: 700; 
+                                color: #292b2c;
+                                font-size: 20px;
+                                ">
+                                    {{ blog.title }}
+                                </a> 
+                                <a href="{% url 'profile' blog.author.id %}">
+                                    - {{ blog.author.first_name }} {{ blog.author.last_name }} 
+                                </a>
+                            </div>
+                            <a 
+                            href="{% url 'category' blog.category.name %}"
+                            style="text-decoration: none;"
+                            > 
+                                {{ blog.category.name | title }} 
+                            </a>
+                        </div>
+                        <br/>
+                        <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
+                            {{ blog.snippet|safe }}
+                        </p>
+                        <div style="display: flex; justify-content: space-between;">
+                            <p>{{ blog.likes.count }} likes</p>
+                            <p style="font-weight: 500;">
+                                {{ blog.date_created }}
+                            </p>
+                        </div>
+                    </li>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <h1> 401 - Unauthorized :( </h1>
+    {% endif %}
+
+{% endblock %}
+
+    
