@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from .models import Blog, Category 
-from django.contrib.auth.models import User
 from .forms import AddBlogForm, EditBlogForm, AddCategoryForm, EditCategoryForm
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -69,10 +68,6 @@ class DeleteCategoryView(DeleteView):
 class AuthorView(ListView):
     model = Blog
     template_name = "author.html"
-
-class ProfileView(DetailView):
-    model = User
-    template_name = 'profile.html'
 
 #functions based views
 

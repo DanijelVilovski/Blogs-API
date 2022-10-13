@@ -18,6 +18,7 @@
             align-items: center;"
         >
             <h1>Blogs</h1>
+            <a href="{% url 'editprofile' user.id %}" class="btn btn-primary">Edit profile </a>
             <!-- {% if user.is_authenticated %}
                 <div>
                     <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>

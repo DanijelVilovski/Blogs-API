@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
-from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView, DetailView, UpdateView
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.urls import reverse_lazy 
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm
+from .forms import SignUpForm, EditProfileForm
 from django.http import HttpResponse
 
 class UserRegisterView(CreateView):
@@ -11,6 +13,22 @@ class UserRegisterView(CreateView):
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
 
+class ProfileView(DetailView):
+    model = User
+    template_name = 'registration/profile.html'
+
+class UserEditView(UpdateView):
+    form_class = EditProfileForm
+    template_name = 'registration/edit_profile.html'
+    success_url = reverse_lazy('profile')
+
+    def get_object(self):
+        return self.request.user
+    
+class PasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    template_name = 'registration/change_password.html'
+    success_url = reverse_lazy('homeview')
 
 # def LoginView(request):
 #     username = request.POST.get('username')

@@ -16,7 +16,5 @@ urlpatterns = [
 
     path('likeblog/<int:pk>', views.LikeBlogView, name='like_blog'),
 
-    path('profile/<int:pk>', views.ProfileView.as_view(), name='profile'),
-
     path('author', views.AuthorView.as_view(), name='authorview'),
 ]
