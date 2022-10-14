@@ -4,7 +4,7 @@ from .models import Blog, Category
 class AddBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['title', 'category', 'snippet','body']
+        fields = ['title', 'header_image', 'category', 'snippet','body']
         
 
         widgets = {

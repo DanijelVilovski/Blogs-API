@@ -3,38 +3,50 @@
 
 {% block content %}
 
+{% load bootstrap_icons %}  
 
     <h1> {{ blog.title }} </h1>
-    <div style="display: flex; justify-content: space-between;">
-        <h5> Author: <small>{{ blog.author.first_name}} {{ blog.author.last_name}}</small> </h5>
-        <p style="font-weight: 500;"> {{ blog.date_created }} </p>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex flex-row justify-content-between align-items-center"> 
+            <h5> Author: </h5>
+            <a href="{% url 'profile' blog.author.id %}" class="text-danger nav-link pt-0" title="See more about author"> 
+                    {{ blog.author.first_name}} {{ blog.author.last_name}}
+            </a> 
+        </div>
+        <p class="font-weight-normal"> {{ blog.date_created }} </p>
     </div>
-    <div style="display: flex; justify-content: space-between;">
-        <h6> Category: <small>{{ blog.category.name }}</small> </h6>
-        <div>
-            <h6>{{ blog.likes.count }} likes</h6>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h6> Category: </h6>
+            <a href="{% url 'profile' blog.author.id %}" class="text-danger nav-link pt-0" title="See more {{ blog.category.name}} blogs"> 
+                    {{ blog.category.name}}
+            </a>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center">
             {% if user.is_authenticated %}
                 <form action="{% url 'like_blog' blog.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="blog_id", value="{{ blog.id }}" class="btn btn-danger" style="font-weight: 600"> Like </button>
+                    <button type="submit" name="blog_id", value="{{ blog.id }}" class="text-danger btn btn-link m-auto"> {% bs_icon 'heart-fill' %} </button>
                 </form>
-            {% else %}
-                <h1>You must be logged in to be able to like blog!</h1>
             {% endif %}
+            <h6 class="p-2">{{ blog.likes.count }} likes</h6>
         </div>
     </div>
     <hr/>
-    <p style="text-align: justify;"> {{ blog.body|safe }} </p>
+    {% if blog.header_image %}
+        <img src="{{ blog.header_image.url }}" height="128px" width="196px">
+    {% endif %}
+    <p> {{ blog.body|safe }} </p>
     <hr>
-    <div style="display: flex; justify-content: space-between;">
+    <div class="d-flex flex-row justify-content-between align-items-center">
         {% if user.is_authenticated and blog.author.id == user.id %}
         <div>
-            <a class="btn btn-dark" href="{% url 'updateblogview' blog.pk %}" style="font-weight: 600"> Edit</a>
-            <a class="btn btn-danger" href="{% url 'deleteblogview' blog.pk %}" style="font-weight: 600"> Delete</a>
+            <a class="btn btn-dark font-weight-bold" href="{% url 'updateblogview' blog.pk %}" > Edit</a>
+            <a class="btn btn-danger font-weight-bold" href="{% url 'deleteblogview' blog.pk %}" > Delete</a>
         </div>
         {% endif %}
         <div>
-            <a class="btn btn-dark" href="{% url 'homeview' %}" style="font-weight: 600"> Back</a>
+            <a class="btn btn-dark font-weight-bold" href="{% url 'homeview' %}" > Back</a>
         </div>
     </div>
 

@@ -1,66 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} User profile {% endblock %}
 
 {% block content %}
+    {% load bootstrap_icons %}  
 
     {% if user.is_authenticated %}
-        <h1 style="text-align: center;">User profile</h1>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin: 50px 0;">
-            <img src="https://icon-library.com/images/profile-png-icon/profile-png-icon-2.jpg" height="128px" width="128">
-            <div>
-                <h5>Name: {{user.first_name}} {{user.last_name}} </h2>
-                <h5>Email: {{user.email}} </h2>
+        <div class="card">
+            <div class="card-title">
+                <h1 class="text-center">User profile</h1>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    {% if user.profile.profile_image %}
+                        <img class="rounded" src="{{ user.profile.profile_image.url }}" height="256" width="256">
+                    {% else %}
+                        <img src="{% static 'blog/images/default_profile.jpg' %}" class="" height="128px" width="128">
+                    {% endif %}
+                    <div>
+                        <h2 class="text-center">{{user.first_name}} {{user.last_name}} </h2>
+                        <h5 class="text-center">{{user.email}} </h5>
+                        <div class="d-flex flex-row justify-content-between w-50 m-auto">
+                            {% if user.profile.website_url %}
+                                <a href="{{ user.profile.website_url }}" title="User's Website" class="text-dark nav-link p-0"> {% bs_icon 'globe' %} </a>
+                            {% endif %}
+                            {% if user.profile.facebook_url %}
+                                <a href="{{ user.profile.facebook_url }}" title="Facebook page" class="text-dark nav-link p-0"> {% bs_icon 'facebook' %}</a>
+                                
+                            {% endif %}
+                            {% if user.profile.instagram_url %}
+                                <a href="{{ user.profile.instagram_url }}" title="Instagram profile" class="text-dark nav-link p-0"> {% bs_icon 'instagram' %} </a>
+                            {% endif %}
+                            {% if user.profile.linkedin_url %}
+                                <a href="{{ user.profile.linkedin_url }}" title="Linkedin profile" class="text-dark nav-link p-0"> {% bs_icon 'linkedin' %} </a>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-justify"> {{ user.profile.bio }} </p>
             </div>
         </div>
-        <div style="display: flex;
-            justify-content: space-between;
-            align-items: center;"
-        >
+        <div class="d-flex flex-row justify-content-between align-items-center mt-5">
             <h1>Blogs</h1>
-            <a href="{% url 'editprofile' user.id %}" class="btn btn-primary">Edit profile </a>
-            <!-- {% if user.is_authenticated %}
-                <div>
-                    <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
-                </div>
-            {% endif %} -->
+            {% if request.user.id == user.id %}
+                <a href="{% url 'editprofile' user.id %}" class="btn btn-danger font-weight-bold">Edit profile </a>
+            {% endif %}
         </div>
         <hr>
-        <ul>
+        <ul class="list-unstyled">
             {% for blog in blogs_user %}
                 {% if blog.author.id == user.id %}
                     <li>
-                        <div style="display: flex;
-                        justify-content: space-between;
-                        align-items: center;"> 
-                            <div style="display: flex; justify-content: space-between;">
+                        <div class="d-flex flex-row justify-content-between align-items-center"> 
+                            <div class="d-flex flex-row justify-content-between align-items-center">
                                 <a href="{% url 'blogdetailview' blog.pk %}"
-                                style="
-                                text-decoration: none; 
-                                font-weight: 700; 
-                                color: #292b2c;
-                                font-size: 20px;
-                                ">
+                                class="font-weight-bold text-dark h4 nav-link p-0"
+                                >
                                     {{ blog.title }}
-                                </a> 
-                                <a href="{% url 'profile' blog.author.id %}">
-                                    - {{ blog.author.first_name }} {{ blog.author.last_name }} 
                                 </a>
                             </div>
                             <a 
                             href="{% url 'category' blog.category.name %}"
-                            style="text-decoration: none;"
+                            class="text-danger font-weight-bold nav-link p-0"
                             > 
                                 {{ blog.category.name | title }} 
                             </a>
                         </div>
                         <br/>
-                        <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
+                        <p class="text-justify mt-1 text-secondary" >
                             {{ blog.snippet|safe }}
                         </p>
-                        <div style="display: flex; justify-content: space-between;">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
                             <p>{{ blog.likes.count }} likes</p>
-                            <p style="font-weight: 500;">
+                            <p class="font-weight-normal">
                                 {{ blog.date_created }}
                             </p>
                         </div>

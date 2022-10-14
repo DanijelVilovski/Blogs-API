@@ -2,51 +2,47 @@
 
 {% block content %}
 
-<div style="display: flex;
-            justify-content: space-between;
-            align-items: center;">
+{% load bootstrap_icons %}  
+
+<div class="d-flex flex-row justify-content-between align-items-center">
     <h1>Blogs</h1>
     {% if user.is_authenticated %}
         <div>
-            <a href="{% url 'addblogview' %}" class="btn btn-dark" style="font-weight: 600;">Add blog</a>
+            <a href="{% url 'addblogview' %}" class="btn btn-dark font-weight-bold">Add blog</a>
         </div>
     {% endif %}
 </div>
 <hr>
-<ul>
+<ul class="list-unstyled ">
     {% for blog in object_list %}
         <li>
-            <div style="display: flex;
-            justify-content: space-between;
-            align-items: center;"> 
-                <div style="display: flex; justify-content: space-between;">
+            <div class="d-flex flex-row justify-content-between align-items-center"> 
+                <div class="d-flex flex-row justify-content-between align-items-center">
                     <a href="{% url 'blogdetailview' blog.pk %}"
-                    style="
-                    text-decoration: none; 
-                    font-weight: 700; 
-                    color: #292b2c;
-                    font-size: 20px;
-                    ">
+                    title="See more details"
+                    
+                    class="font-weight-bold text-dark h4 nav-link pl-0 pr-2"
+                    >
                         {{ blog.title }}
                     </a> 
-                    <a href="{% url 'profile' blog.author.id %}">
+                    <a href="{% url 'profile' blog.author.id %}" class=" text-danger font-weight-bold nav-link p-0" title="See more about author">
                         - {{ blog.author.first_name }} {{ blog.author.last_name }} 
                     </a>
                 </div>
                 <a 
                 href="{% url 'category' blog.category.name %}"
-                style="text-decoration: none;"
+                class="text-danger font-weight-bold nav-link p-0"
                 > 
                     {{ blog.category.name | title }} 
                 </a>
             </div>
             <br/>
-            <p style="color:rgb(124, 122, 122); text-align: justify; margin-top: 10px;">
+            <p class="text-justify mt-1 text-secondary" >
                 {{ blog.snippet|safe }}
             </p>
-            <div style="display: flex; justify-content: space-between;">
+            <div class="d-flex flex-row justify-content-between align-items-center">
                 <p>{{ blog.likes.count }} likes</p>
-                <p style="font-weight: 500;">
+                <p class="font-weight-normal">
                     {{ blog.date_created }}
                 </p>
             </div>

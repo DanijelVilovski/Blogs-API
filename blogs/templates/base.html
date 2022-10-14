@@ -15,14 +15,14 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'homeview' %}">Blogs</a>
+        <a class="navbar-brand font-weight-bold" href="{% url 'homeview' %}">Blogs</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'homeview' %}">Home</a>
+                    <a class="nav-link font-weight-bold" href="{% url 'homeview' %}">Home</a>
                 </li>
                 {% if user.is_superuser %}
                     <li class="nav-item">
@@ -52,10 +52,10 @@
 
             <div class="d-flex">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="btn btn-dark ms-3" style="font-weight: 600">Logout  </a>
+                    <a href="{% url 'logout' %}" class="btn btn-dark font-weight-bold ms-3" >Logout  </a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-dark ms-3" style="font-weight: 600">Login</a>
-                    <a href="{% url 'register' %}" class="btn btn-dark ms-3" style="font-weight: 600">Register</a>
+                    <a href="{% url 'login' %}" class="btn btn-dark font-weight-bold ms-3" >Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-dark font-weight-bold ms-3" >Register</a>
                 {% endif  %}
             </div>
         </div>
