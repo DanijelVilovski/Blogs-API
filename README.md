@@ -1,5 +1,7 @@
 # Blogs Website
 
+Checkout my website on Heroku: https://danijels-blog-website.herokuapp.com/
+
 This website is fully written using Django.
 
 ## Libraries used
