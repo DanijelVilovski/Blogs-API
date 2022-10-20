@@ -44,6 +44,42 @@
     {% endfor %}
 </ul>
 
+<nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if category_blogs.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">
+                        &laquo First
+                    </a>
+                </li>
+                <li> 
+                    <a class="page-link" href="?page={{ category_blogs.previous_page_number }}">
+                        Previous
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <a class="page-link" href="#">
+                    Page {{ category_blogs.number }} of {{ category_blogs.paginator.num_pages }}
+                </a>
+            </li>
+
+            {% if category_blogs.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ category_blogs.next_page_number }}">
+                        Next
+                    </a>
+                </li>
+                <li>
+                    <a class="page-link" href="?page={{ category_blogs.paginator.num_pages }}">
+                        Last &raquo
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
 {% endblock %}
 
     
