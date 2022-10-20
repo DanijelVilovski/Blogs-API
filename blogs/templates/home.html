@@ -4,44 +4,11 @@
 
 {% load bootstrap_icons %}  
 
-<<<<<<< HEAD
     <div class="d-flex flex-row justify-content-between align-items-center mb-4">
         <h1>Blogs</h1>
         {% if user.is_authenticated %}
             <div>
                 <a href="{% url 'addblogview' %}" class="btn btn-dark font-weight-bold">Add blog</a>
-=======
-<div class="d-flex flex-row justify-content-between align-items-center mb-4">
-    <h1>Blogs</h1>
-    {% if user.is_authenticated %}
-        <div>
-            <a href="{% url 'addblogview' %}" class="btn btn-dark font-weight-bold">Add blog</a>
-        </div>
-    {% endif %}
-</div>
-
-<ul class="list-unstyled ">
-    {% for blog in blogs %}
-        <li class="mb-3">     
-            <a 
-                href="{% url 'blogdetailview' blog.pk %}"
-                title="See more details"
-                class="font-weight-bold text-dark h4 nav-link pl-0 m-0 p-0"
-            >
-                {{ blog.title }}
-            </a> 
-            <hr class="mt-2 mb-2">
-            <div class="d-flex flex-row justify-content-between">
-                <div class="d-flex flex-row">
-                <p class="pr-2 font-weight-normal">Author: </p>
-                <a href="{% url 'profile' blog.author.id %}" class="text-dark font-weight-light font-italic nav-link p-0" title="See more about author">
-                    {{ blog.author.first_name }} {{ blog.author.last_name }} 
-                </a>
-                </div>
-                <a href="{% url 'category' blog.category.name %}" class="font-weight-normal nav-link p-0"> 
-                    {{ blog.category.name | title }} 
-                </a>
->>>>>>> develop
             </div>
         {% endif %}
     </div>
