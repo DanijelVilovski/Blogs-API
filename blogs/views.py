@@ -5,19 +5,19 @@ from .models import Blog, Category, Comment
 from .forms import AddBlogForm, EditBlogForm, AddCategoryForm, EditCategoryForm, AddCommentForm
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 
 # listview allows us to  list a query set into the database (all blog posts)
 # detailview is similar but it brings back details of just one record (one blog post)
 
 # Create your views here.
 
-#class based views
+def HomeView(request):
+    p = Paginator(Blog.objects.all().order_by('-date_created'), 5)
+    page = request.GET.get('page')
+    blogs = p.get_page(page)
 
-class HomeView(ListView):
-    model = Blog
-    template_name = 'home.html'
-    # ordering = ['-id'] #we want the last added or updated blog, to be positioned on top of the list of blogs 
-    ordering = ['-date_created']
+    return render(request, 'home.html', {'blogs': blogs})
 
 class BlogsDetailView(DetailView):
     model = Blog
@@ -52,7 +52,6 @@ class EditBlogView(UpdateView):
     model = Blog
     form_class = EditBlogForm
     template_name = 'updateblog.html'
-    #fields = ['title', 'body']
 
 class DeleteBlogView(DeleteView):
     model = Blog
@@ -95,12 +94,18 @@ class AddCommentView(CreateView):
     def get_success_url(self):
         return reverse_lazy('blogdetailview', kwargs={'pk': self.kwargs['pk']})
 
-#functions based views
+# def CategoryBlogList(request, categoryname):
+#     category = Category.objects.get(name=categoryname) 
+#     category_blogs = Blog.objects.filter(category=category)
+#     return render(request, 'category.html', {'cats': categoryname, 'category_blogs': category_blogs})
 
 def CategoryBlogList(request, categoryname):
-    category = Category.objects.get(name=categoryname) 
-    category_blogs = Blog.objects.filter(category=category)
-    return render(request, 'category.html', {'cats': categoryname, 'category_blogs': category_blogs})
+    category = Category.objects.get(name = categoryname)
+    p = Paginator(Blog.objects.filter(category = category), 5)
+    page = request.GET.get('page')
+    category_blogs = p.get_page(page)
+
+    return render(request, 'category.html', {'cats': categoryname,'category_blogs': category_blogs})
 
 def LikeBlogView(request, pk):
     blog = get_object_or_404(Blog, id=request.POST.get('blog_id'))
