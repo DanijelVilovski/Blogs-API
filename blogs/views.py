@@ -17,14 +17,6 @@ def HomeView(request):
     page = request.GET.get('page')
     blogs = p.get_page(page)
 
-<<<<<<< HEAD
-=======
-def HomeView(request):
-    p = Paginator(Blog.objects.all().order_by('-date_created'), 5)
-    page = request.GET.get('page')
-    blogs = p.get_page(page)
-
->>>>>>> develop
     return render(request, 'home.html', {'blogs': blogs})
 
 class BlogsDetailView(DetailView):
