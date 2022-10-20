@@ -39,7 +39,10 @@
                 {{ blog.snippet|safe }}
             </p>
             <div class="d-flex flex-row justify-content-between align-items-center">
-                <p>{{ blog.likes.count }} likes</p>
+                <div class="d-flex flex-row">
+                    <p class="text-dark pt-1 pr-2"> {% bs_icon 'heart-fill' %} </p>
+                    <p>{{ blog.likes.count }} likes</p>
+                </div>
                 <p class="font-weight-light font-italic">
                     {{ blog.date_created }}
                 </p>
