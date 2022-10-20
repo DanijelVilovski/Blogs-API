@@ -4,53 +4,88 @@
 
 {% load bootstrap_icons %}  
 
-<div class="d-flex flex-row justify-content-between align-items-center mb-4">
-    <h1>Blogs</h1>
-    {% if user.is_authenticated %}
-        <div>
-            <a href="{% url 'addblogview' %}" class="btn btn-dark font-weight-bold">Add blog</a>
-        </div>
-    {% endif %}
-</div>
+    <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+        <h1>Blogs</h1>
+        {% if user.is_authenticated %}
+            <div>
+                <a href="{% url 'addblogview' %}" class="btn btn-dark font-weight-bold">Add blog</a>
+            </div>
+        {% endif %}
+    </div>
 
-<ul class="list-unstyled ">
-    {% for blog in blogs %}
-        <li class="mb-3">     
-            <a 
-                href="{% url 'blogdetailview' blog.pk %}"
-                title="See more details"
-                class="font-weight-bold text-dark h4 nav-link pl-0 m-0 p-0"
-            >
-                {{ blog.title }}
-            </a> 
-            <hr class="mt-2 mb-2">
-            <div class="d-flex flex-row justify-content-between">
-                <div class="d-flex flex-row">
-                <p class="pr-2 font-weight-normal">Author: </p>
-                <a href="{% url 'profile' blog.author.id %}" class="text-dark font-weight-light font-italic nav-link p-0" title="See more about author">
-                    {{ blog.author.first_name }} {{ blog.author.last_name }} 
-                </a>
+    <ul class="list-unstyled ">
+        {% for blog in blogs %}
+            <li class="mb-3">     
+                <a 
+                    href="{% url 'blogdetailview' blog.pk %}"
+                    title="See more details"
+                    class="font-weight-bold text-dark h4 nav-link pl-0 m-0 p-0"
+                >
+                    {{ blog.title }}
+                </a> 
+                <hr class="mt-2 mb-2">
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row">
+                    <p class="pr-2 font-weight-normal">Author: </p>
+                    <a href="{% url 'profile' blog.author.id %}" class="text-dark font-weight-light font-italic nav-link p-0" title="See more about author">
+                        {{ blog.author.first_name }} {{ blog.author.last_name }} 
+                    </a>
+                    </div>
+                    <a href="{% url 'category' blog.category.name %}" class="font-weight-normal nav-link p-0"> 
+                        {{ blog.category.name | title }} 
+                    </a>
                 </div>
-                <a href="{% url 'category' blog.category.name %}" class="font-weight-normal nav-link p-0"> 
-                    {{ blog.category.name | title }} 
-                </a>
-            </div>
-            <p class="text-justify mt-1 text-secondary mb-3" >
-                {{ blog.snippet|safe }}
-            </p>
-            <div class="d-flex flex-row justify-content-between align-items-center">
-                <div class="d-flex flex-row">
-                    <p class="text-dark pt-1 pr-2"> {% bs_icon 'heart-fill' %} </p>
-                    <p>{{ blog.likes.count }} likes</p>
-                </div>
-                <p class="font-weight-light font-italic">
-                    {{ blog.date_created }}
+                <p class="text-justify mt-1 text-secondary mb-3" >
+                    {{ blog.snippet|safe }}
                 </p>
-            </div>
-        </li>
-        
-    {% endfor %}
-</ul>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <p>{{ blog.likes.count }} likes</p>
+                    <p class="font-weight-light font-italic">
+                        {{ blog.date_created }}
+                    </p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if blogs.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">
+                        &laquo First
+                    </a>
+                </li>
+                <li> 
+                    <a class="page-link" href="?page={{ blogs.previous_page_number }}">
+                        Previous
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <a class="page-link" href="#">
+                    Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
+                </a>
+            </li>
+
+            {% if blogs.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.next_page_number }}">
+                        Next
+                    </a>
+                </li>
+                <li>
+                    <a class="page-link" href="?page={{ blog.paginator.num_pages }}">
+                        Last &raquo
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    
+
 
 <nav aria-label="Page navigation example">
         <ul class="pagination">

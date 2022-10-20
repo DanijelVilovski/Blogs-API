@@ -12,13 +12,19 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 
-#class based views
-
 def HomeView(request):
     p = Paginator(Blog.objects.all().order_by('-date_created'), 5)
     page = request.GET.get('page')
     blogs = p.get_page(page)
 
+<<<<<<< HEAD
+=======
+def HomeView(request):
+    p = Paginator(Blog.objects.all().order_by('-date_created'), 5)
+    page = request.GET.get('page')
+    blogs = p.get_page(page)
+
+>>>>>>> develop
     return render(request, 'home.html', {'blogs': blogs})
 
 class BlogsDetailView(DetailView):
@@ -54,7 +60,6 @@ class EditBlogView(UpdateView):
     model = Blog
     form_class = EditBlogForm
     template_name = 'updateblog.html'
-    #fields = ['title', 'body']
 
 class DeleteBlogView(DeleteView):
     model = Blog
@@ -97,7 +102,10 @@ class AddCommentView(CreateView):
     def get_success_url(self):
         return reverse_lazy('blogdetailview', kwargs={'pk': self.kwargs['pk']})
 
-#functions based views
+# def CategoryBlogList(request, categoryname):
+#     category = Category.objects.get(name=categoryname) 
+#     category_blogs = Blog.objects.filter(category=category)
+#     return render(request, 'category.html', {'cats': categoryname, 'category_blogs': category_blogs})
 
 def CategoryBlogList(request, categoryname):
     category = Category.objects.get(name = categoryname)
