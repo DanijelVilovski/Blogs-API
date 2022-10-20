@@ -101,7 +101,7 @@ class AddCommentView(CreateView):
 
 def CategoryBlogList(request, categoryname):
     category = Category.objects.get(name = categoryname)
-    p = Paginator(Blog.objects.filter(category = category), 5)
+    p = Paginator(Blog.objects.filter(category = category).order_by('-date_created'), 5)
     page = request.GET.get('page')
     category_blogs = p.get_page(page)
 
