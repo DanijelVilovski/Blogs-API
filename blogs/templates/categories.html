@@ -3,28 +3,21 @@
 {% block content %}
 
 {% if user.is_superuser%}
-    <div style="display: flex;
-                justify-content: space-between;
-                align-items: center;">
+    <div class="d-flex flex-row justify-content-between align-items-center">
         <h1>Categories</h1>
         {% if user.is_authenticated %}
             <div>
                 {% if user.is_superuser %}
-                    <a href="{% url 'addcategoryview' %}" class="btn btn-dark" style="font-weight: 600;">Add category</a>
+                    <a href="{% url 'addcategoryview' %}" class="btn btn-dark font-weight-bold">Add category</a>
                 {% endif %}
             </div>
         {% endif %}
     </div>
     <hr>
-    <ul>
+    <ul class="list-unstyled">
         {% for category in object_list %}
-            <a href="{% url 'editcategoryview' category.pk %}"
-            style="
-            text-decoration: none; 
-            font-weight: 600; 
-            color: #292b2c;
-            font-size: 20px;
-            ">
+            <a href="{% url 'editcategoryview' category.pk %}" 
+            class="font-weight-bold text-dark h5 .text-decoration-none nav-link pl-0">
                 {{ category.id }} - {{ category.name }}
             </a>
             <hr>

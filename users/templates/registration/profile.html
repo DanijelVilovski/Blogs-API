@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} User profile {% endblock %}
+
+{% block content %}
+    {% load bootstrap_icons %}  
+
+    {% if user.is_authenticated %}
+        <div class="card bg-light">
+            <div class="card-title">
+                <h1 class="text-center">User profile</h1>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    {% if user.profile.profile_image %}
+                        <img class="rounded" src="{{ user.profile.profile_image.url }}" height="256" width="256">
+                    {% else %}
+                        <img src="{% static 'blog/images/default_profile.jpg' %}" class="" height="128px" width="128">
+                    {% endif %}
+                    <div>
+                        <h2 class="text-center">{{user.first_name}} {{user.last_name}} </h2>
+                        <h5 class="text-center">{{user.email}} </h5>
+                        <div class="d-flex flex-row justify-content-between w-50 m-auto">
+                            {% if user.profile.website_url %}
+                                <a href="{{ user.profile.website_url }}" title="User's Website" class="text-dark nav-link p-0"> {% bs_icon 'globe' %} </a>
+                            {% endif %}
+                            {% if user.profile.facebook_url %}
+                                <a href="{{ user.profile.facebook_url }}" title="Facebook page" class="text-dark nav-link p-0"> {% bs_icon 'facebook' %}</a>
+                                
+                            {% endif %}
+                            {% if user.profile.instagram_url %}
+                                <a href="{{ user.profile.instagram_url }}" title="Instagram profile" class="text-dark nav-link p-0"> {% bs_icon 'instagram' %} </a>
+                            {% endif %}
+                            {% if user.profile.linkedin_url %}
+                                <a href="{{ user.profile.linkedin_url }}" title="Linkedin profile" class="text-dark nav-link p-0"> {% bs_icon 'linkedin' %} </a>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-justify"> {{ user.profile.bio }} </p>
+            </div>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-5 mb-4">
+            <h1>Blogs</h1>
+            {% if request.user.id == user.id %}
+                <div>
+                        <a href="{% url 'editprofile' user.id %}" class="btn btn-danger font-weight-bold">Edit profile </a>
+                    {% if request.user.profile %}
+                        <a href="{% url 'editbio' user.profile.id %}" class="btn btn-danger font-weight-bold">Edit bio </a>
+                    {% else %}
+                        <a href="{% url 'addbio' user.id %}" class="btn btn-danger font-weight-bold">Add bio </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <ul class="list-unstyled">
+            {% for blog in blogs_user %}
+                {% if blog.author.id == user.id %}
+                    <li class="mb-3">     
+            <a 
+                href="{% url 'blogdetailview' blog.pk %}"
+                title="See more details"
+                class="font-weight-bold text-dark h4 nav-link pl-0 m-0 p-0"
+            >
+                {{ blog.title }}
+            </a> 
+            <hr class="mt-2 mb-2">
+            <div class="d-flex flex-row justify-content-between">
+                <div class="d-flex flex-row">
+                <p class="pr-2 font-weight-normal">Author: </p>
+                <a href="{% url 'profile' blog.author.id %}" class="text-dark font-weight-light font-italic nav-link p-0" title="See more about author">
+                    {{ blog.author.first_name }} {{ blog.author.last_name }} 
+                </a>
+                </div>
+                <a href="{% url 'category' blog.category.name %}" class="font-weight-normal nav-link p-0"> 
+                    {{ blog.category.name | title }} 
+                </a>
+            </div>
+            <p class="text-justify mt-1 text-secondary mb-3" >
+                {{ blog.snippet|safe }}
+            </p>
+            <div class="d-flex flex-row justify-content-between align-items-center">
+                <p>{{ blog.likes.count }} likes</p>
+                <p class="font-weight-light font-italic">
+                    {{ blog.date_created }}
+                </p>
+            </div>
+        </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <h1> 401 - Unauthorized :( </h1>
+    {% endif %}
+
+{% endblock %}
+
+    

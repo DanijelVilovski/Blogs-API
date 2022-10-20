@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}  
+{% load static %}
+
+{% block title %} Create blog {% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-row justify-content-between mt-5 p-3 border">
+        <div class="w-50 flex-column">
+            <h1 class="text-center">Danijel Vilovski</h1>
+            
+            <p class="text-justify p-3">
+                Hello everyone! </br> </br> My name is Danijel Vilovski.  I am 21 years old, 
+                and currently I'm in the 4th year at the Faculty of Technical Sciences in Novi Sad, Serbia. 
+                This is my first website project using only Django. 
+                Check out my Github to see other projects I've been doing. </br> </br> Also check my social media 
+                and take a look at my blog website!
+            </p>
+
+            <div class="d-flex flex-row justify-content-center">
+                <p class="text-center"> Check my github</p>
+                <a href="https://github.com/DanijelVilovski" class="text-danger btn btn-link ml-2 p-0"> {% bs_icon 'github' %} </a>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center">
+                <p> Check my linkedin</p>
+                <a href="https://www.linkedin.com/in/danijel-vilovski/" class="text-danger btn btn-link ml-2 p-0"> {% bs_icon 'linkedin' %} </a>
+            </div>
+
+        </div>
+        <div class="w-50">
+            <img src="{% static 'blog/images/author.jpg' %}" class="rounded" style="max-width: 100%;">
+        </div>
+    </div>
+
+    <body class="bg-dark">
+
+    </body>
+
+{% endblock %}

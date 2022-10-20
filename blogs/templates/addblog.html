@@ -7,12 +7,14 @@
     {% if user.is_authenticated %}
         <h1>Create blog</h1>
         <div class="from-group">
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data"> <!-- enctype allows encoding for images-->
                 {% csrf_token %}
                 {{ form.media }}  
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-dark" style="font-weight: 600">Add</button>
-                <a href="{% url 'homeview' %}" type="submit" class="btn btn-danger" style="font-weight: 600">Cancel</a>
+                <div class="d-flex flex-row justify-content-between">
+                    <button type="submit" class="btn btn-dark font-weight-bold">Add</button>
+                    <a href="{% url 'homeview' %}" type="submit" class="btn btn-danger font-weight-bold">Cancel</a>
+                </div>
             </form>
         </div>
     {% else %}

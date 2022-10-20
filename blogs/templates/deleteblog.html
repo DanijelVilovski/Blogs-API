@@ -8,14 +8,14 @@
     <h5> Author: <small>{{ blog.author.first_name}} {{ blog.author.last_name}}</small> </h5>
 
     <hr/>
-    <p style="text-align: justify;"> {{ blog.body}} </p>
+    <p class="text-justify"> {{ blog.body|safe}} </p>
     <hr>
     <div class="from-group">
         <form action="" method="POST">
             {% csrf_token %}
-            <div style="display: flex; justify-content: space-between;">
-                <button type="submit" class="btn btn-danger" style="font-weight: 600">Delete</button>
-                <a class="btn btn-dark" href="{% url 'blogdetailview' blog.pk %}" style="font-weight: 600"> Back</a>
+            <div class="d-flex flex-row justify-content-between align-items-center">
+                <button type="submit" class="btn btn-danger font-weight-bold" >Delete</button>
+                <a class="btn btn-dark font-weight-bold" href="{% url 'blogdetailview' blog.pk %}"> Back</a>
             </div>
         </form>
     </div>

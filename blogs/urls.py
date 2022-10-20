@@ -13,4 +13,10 @@ urlpatterns = [
     path('categories/editcategory/<int:pk>', views.EditCategoryView.as_view(), name='editcategoryview'),
     path('categories/<int:pk>/deletecategory', views.DeleteCategoryView.as_view(), name='deletecategoryview'),
     re_path('category/(?P<categoryname>[-\w]*)/$', views.CategoryBlogList, name='category'),
+
+    path('likeblog/<int:pk>', views.LikeBlogView, name='like_blog'),
+
+    path('author', views.AuthorView.as_view(), name='authorview'),
+
+     path('blogs/<int:pk>/addcomment', views.AddCommentView.as_view(), name='addcomment'),
 ]

@@ -1,4 +1,5 @@
-from .models import Category
+from .models import Category, Blog
+from django.contrib.auth.models import User
 
 def navbar_context(request):
     return {'cat_menu': Category.objects.all(), }
@@ -9,3 +10,10 @@ def navbar_context(request):
 # {% for category in cat_menu %}
 #     <a class="dropdown-item" href="{% url 'category' category.name %}"> {{ category.name }} </a>
 # {% endfor %}
+
+def blogs_by_user(request):
+    return {'blogs_user': Blog.objects.all(), }
+
+def current_user(request):
+    user = request.user
+    return {'current': user, }
