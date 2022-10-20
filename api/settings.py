@@ -72,6 +72,9 @@ TEMPLATES = [
 
                 'blogs.context_proccessors.navbar_context',
                 'blogs.context_proccessors.blogs_by_user',
+                'blogs.context_proccessors.current_user',
+
+                
             ],
         },
     },
@@ -133,7 +136,7 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_DIRS = [
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 

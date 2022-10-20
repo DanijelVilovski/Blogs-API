@@ -41,3 +41,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user) 
+
+    def get_absolute_url(self):
+        return reverse('profile', args=[str(self.id)])
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE)
+    body = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s ' % (self.blog.title) 

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} {{ blog.title}} {% endblock %}
 
 {% block content %}
@@ -6,39 +7,47 @@
 {% load bootstrap_icons %}  
 
     <h1> {{ blog.title }} </h1>
+    <hr>
     <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="d-flex flex-row justify-content-between align-items-center"> 
             <h5> Author: </h5>
-            <a href="{% url 'profile' blog.author.id %}" class="text-danger nav-link pt-0" title="See more about author"> 
+            {% if blog.author.id %}
+            <a href="{% url 'profile' blog.author.id %}" class="nav-link text-dark pt-0 font-italic font-weight-light" title="See more about author"> 
                     {{ blog.author.first_name}} {{ blog.author.last_name}}
             </a> 
+            {% endif %}
         </div>
-        <p class="font-weight-normal"> {{ blog.date_created }} </p>
+        <p class="font-weight-light font-italic"> {{ blog.date_created }} </p>
     </div>
     <div class="d-flex flex-row justify-content-between align-items-center">
         <div class="d-flex flex-row justify-content-between align-items-center">
             <h6> Category: </h6>
-            <a href="{% url 'profile' blog.author.id %}" class="text-danger nav-link pt-0" title="See more {{ blog.category.name}} blogs"> 
+            <a href="{% url 'category' blog.category.name %}" class="text-dark pt-0 font-italic font-weight-light nav-link pt-0" title="See more {{ blog.category.name}} blogs"> 
                     {{ blog.category.name}}
             </a>
         </div>
         <div class="d-flex flex-row justify-content-between align-items-center">
             {% if user.is_authenticated %}
+                {% if blog.pk %}
                 <form action="{% url 'like_blog' blog.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="blog_id", value="{{ blog.id }}" class="text-danger btn btn-link m-auto"> {% bs_icon 'heart-fill' %} </button>
+                    {% if liked %}
+                        <button type="submit" name="blog_id", value="{{ blog.id }}" class="text-danger btn btn-link m-auto"> {% bs_icon 'heart-fill' %} </button>
+                    {% else %}
+                        <button type="submit" name="blog_id", value="{{ blog.id }}" class="text-danger btn btn-link m-auto"> {% bs_icon 'heart' %} </button>
+                    {% endif %}
                 </form>
+                {% endif %}
             {% endif %}
             <h6 class="p-2">{{ blog.likes.count }} likes</h6>
         </div>
-    </div>
-    <hr/>
+    </div>  
     {% if blog.header_image %}
         <img src="{{ blog.header_image.url }}" height="128px" width="196px">
     {% endif %}
     <p> {{ blog.body|safe }} </p>
     <hr>
-    <div class="d-flex flex-row justify-content-between align-items-center">
+    <div class="d-flex flex-row justify-content-between align-items-center mb-5">
         {% if user.is_authenticated and blog.author.id == user.id %}
         <div>
             <a class="btn btn-dark font-weight-bold" href="{% url 'updateblogview' blog.pk %}" > Edit</a>
@@ -49,6 +58,37 @@
             <a class="btn btn-dark font-weight-bold" href="{% url 'homeview' %}" > Back</a>
         </div>
     </div>
+
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <a href="{% url 'addcomment' blog.pk %}" class="btn btn-dark font-weight-bold">Add comment</a>
+        
+    </div>
+
+    {% if not blog.comments.all %}
+    <p> No comments yet... </p>
+    {% else %}
+        {% for comment in blog.comments.all %}
+            <div class="d-flex bd-highlight align-items-center">
+                <div class="p-2 bd-highlight">
+                    {% if comment.user.profile.profile_image %}
+                        <img class="rounded-circle" src="{{comment.user.profile.profile_image.url}}" width=42 height=42>
+                    {% else%}
+                        <img class="rounded-circle" src="{% static 'blog/images/default_profile.jpg' %}" width=42 height=42>
+                    {% endif %}
+                </div>
+                <div class="p-2 flex-grow-2 w-100 bd-highlight">
+                    <div class="d-flex flex-row justify-content-between">
+                    <a href="{% url 'profile' comment.user.id %}" class="text-danger nav-link p-0">
+                        {{comment.user.username}}
+                    </a>
+                    <p>{{comment.date_created}}</p>
+                    </div>
+                    <p>{{comment.body}}</p>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}
 

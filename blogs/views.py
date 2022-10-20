@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
-from .models import Blog, Category 
-from .forms import AddBlogForm, EditBlogForm, AddCategoryForm, EditCategoryForm
+from .models import Blog, Category, Comment
+from .forms import AddBlogForm, EditBlogForm, AddCategoryForm, EditCategoryForm, AddCommentForm
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -22,6 +22,19 @@ class HomeView(ListView):
 class BlogsDetailView(DetailView):
     model = Blog
     template_name = 'blog_detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BlogsDetailView, self).get_context_data(*args, **kwargs)
+
+        stuff = get_object_or_404(Blog, id=self.kwargs['pk'])
+
+        liked = False 
+
+        if stuff.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+        context["liked"] = liked
+        return context
 
 class AddBlogView(CreateView):
     model = Blog
@@ -69,6 +82,19 @@ class AuthorView(ListView):
     model = Blog
     template_name = "author.html"
 
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = AddCommentForm
+    template_name = "addcomment.html"
+
+    def form_valid(self,form):
+        form.instance.user = self.request.user
+        form.instance.blog_id = self.kwargs['pk']
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('blogdetailview', kwargs={'pk': self.kwargs['pk']})
+
 #functions based views
 
 def CategoryBlogList(request, categoryname):
@@ -87,6 +113,9 @@ def LikeBlogView(request, pk):
         blog.likes.add(request.user)
         liked = True
     return HttpResponseRedirect(reverse('blogdetailview', args=[str(pk)]))
+
+
+
 
     
 

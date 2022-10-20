@@ -4,8 +4,9 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.urls import reverse_lazy 
 from django.contrib.auth.models import User
+from blogs.models import Profile
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm, EditProfileForm
+from .forms import SignUpForm, EditProfileForm, EditBioForm, AddBioForm
 from django.http import HttpResponse
 
 class UserRegisterView(CreateView):
@@ -30,19 +31,20 @@ class PasswordChangeView(PasswordChangeView):
     template_name = 'registration/change_password.html'
     success_url = reverse_lazy('homeview')
 
-# def LoginView(request):
-#     username = request.POST.get('username')
-#     password = request.POST.get('password')
-#     user = authenticate(request, username=username, password=password)
-#     if user is not None:
-#         user.is_active = True
-#         login(request, user)
-#         return render(request, 'login.html')
-#     else:
-#         return HttpResponse("Nesto nije u redu")
+class AddBioView(CreateView):
+    form_class = AddBioForm
+    template_name = 'registration/addbio.html'
+    success_url = reverse_lazy('homeview')
 
+    def form_valid(self,form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-# def LogoutView(request):
-#     logout(request)
-#     return HttpResponse("Sve u redu batice")
-   
+class EditBioView(UpdateView):
+    model = Profile
+    form_class = EditBioForm
+    template_name = 'registration/editbio.html'
+    #success_url = reverse_lazy('homeview')
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'pk': self.request.user.id })

@@ -17,4 +17,6 @@ urlpatterns = [
     path('likeblog/<int:pk>', views.LikeBlogView, name='like_blog'),
 
     path('author', views.AuthorView.as_view(), name='authorview'),
+
+     path('blogs/<int:pk>/addcomment', views.AddCommentView.as_view(), name='addcomment'),
 ]

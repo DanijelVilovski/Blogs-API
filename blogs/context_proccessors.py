@@ -13,3 +13,7 @@ def navbar_context(request):
 
 def blogs_by_user(request):
     return {'blogs_user': Blog.objects.all(), }
+
+def current_user(request):
+    user = request.user
+    return {'current': user, }

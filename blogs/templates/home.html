@@ -4,7 +4,7 @@
 
 {% load bootstrap_icons %}  
 
-<div class="d-flex flex-row justify-content-between align-items-center">
+<div class="d-flex flex-row justify-content-between align-items-center mb-4">
     <h1>Blogs</h1>
     {% if user.is_authenticated %}
         <div>
@@ -12,42 +12,40 @@
         </div>
     {% endif %}
 </div>
-<hr>
+
 <ul class="list-unstyled ">
     {% for blog in object_list %}
-        <li>
-            <div class="d-flex flex-row justify-content-between align-items-center"> 
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                    <a href="{% url 'blogdetailview' blog.pk %}"
-                    title="See more details"
-                    
-                    class="font-weight-bold text-dark h4 nav-link pl-0 pr-2"
-                    >
-                        {{ blog.title }}
-                    </a> 
-                    <a href="{% url 'profile' blog.author.id %}" class=" text-danger font-weight-bold nav-link p-0" title="See more about author">
-                        - {{ blog.author.first_name }} {{ blog.author.last_name }} 
-                    </a>
+        <li class="mb-3">     
+            <a 
+                href="{% url 'blogdetailview' blog.pk %}"
+                title="See more details"
+                class="font-weight-bold text-dark h4 nav-link pl-0 m-0 p-0"
+            >
+                {{ blog.title }}
+            </a> 
+            <hr class="mt-2 mb-2">
+            <div class="d-flex flex-row justify-content-between">
+                <div class="d-flex flex-row">
+                <p class="pr-2 font-weight-normal">Author: </p>
+                <a href="{% url 'profile' blog.author.id %}" class="text-dark font-weight-light font-italic nav-link p-0" title="See more about author">
+                    {{ blog.author.first_name }} {{ blog.author.last_name }} 
+                </a>
                 </div>
-                <a 
-                href="{% url 'category' blog.category.name %}"
-                class="text-danger font-weight-bold nav-link p-0"
-                > 
+                <a href="{% url 'category' blog.category.name %}" class="font-weight-normal nav-link p-0"> 
                     {{ blog.category.name | title }} 
                 </a>
             </div>
-            <br/>
-            <p class="text-justify mt-1 text-secondary" >
+            <p class="text-justify mt-1 text-secondary mb-3" >
                 {{ blog.snippet|safe }}
             </p>
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <p>{{ blog.likes.count }} likes</p>
-                <p class="font-weight-normal">
+                <p class="font-weight-light font-italic">
                     {{ blog.date_created }}
                 </p>
             </div>
         </li>
-        <hr>
+        
     {% endfor %}
 </ul>
 
