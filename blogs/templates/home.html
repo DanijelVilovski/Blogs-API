@@ -124,45 +124,6 @@
         </ul>
     </nav>
 
-    
-
-
-<nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if blogs.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1">
-                        &laquo First
-                    </a>
-                </li>
-                <li> 
-                    <a class="page-link" href="?page={{ blogs.previous_page_number }}">
-                        Previous
-                    </a>
-                </li>
-            {% endif %}
-
-            <li class="page-item disabled">
-                <a class="page-link" href="#">
-                    Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
-                </a>
-            </li>
-
-            {% if blogs.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ blogs.next_page_number }}">
-                        Next
-                    </a>
-                </li>
-                <li>
-                    <a class="page-link" href="?page={{ blog.paginator.num_pages }}">
-                        Last &raquo
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
-
 {% endblock %}
 
     
